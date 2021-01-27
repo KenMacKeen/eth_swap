@@ -1,4 +1,4 @@
-const Token = artifacts.require("Token")
+const Token = artifacts.require("Token");
 const EthSwap = artifacts.require("EthSwap");
 
 module.exports = async function(deployer) {
