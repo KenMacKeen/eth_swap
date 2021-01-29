@@ -39,8 +39,18 @@ describe('EthSwap deployment', async() => {
 		})
 	})	
 describe('buyTokens()', async () => {
+	let result
+
+	before(async () => {
+		//purchase tokens before each example
+		result = await ethSwap.buyTokens( {from: investor, value: web3.utils.toWei( '1', 'ether')})
+
+
+	})
 	it('Allows user to instantly purchase tokens from ethSwap at a fixed price', async () => {
-		await ethSwap.buyTokens( {from: investor, value: web3.utils.toWei( '1', 'ether')})
+	// Check investore token balance after purchase
+	let investorBalance = await token.balanceOf(investor)
+	assert.equal(investorBalance.toString(), tokens('100'))
 	})
   })
 
