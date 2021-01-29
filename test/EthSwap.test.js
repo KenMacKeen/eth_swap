@@ -38,6 +38,11 @@ describe('EthSwap deployment', async() => {
 			assert.equal(balance.toString(), tokens('1000000'))
 		})
 	})	
+describe('buyTokens()', async () => {
+	it('Allows user to instantly purchase tokens from ethSwap at a fixed price', async () => {
+		await ethSwap.buyTokens( {from: investor, value: web3.utils.toWei( '1', 'ether')})
+	})
+  })
 
 })
 
