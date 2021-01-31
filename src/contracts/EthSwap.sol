@@ -7,7 +7,14 @@ contract EthSwap {
     Token public token;
     uint public rate = 100;
 
-    event TokenPurchased(
+    event TokensPurchased(
+    address account,
+    address token,
+    uint amount,
+    uint rate
+    );
+
+    event TokensSold(
     address account,
     address token,
     uint amount,
@@ -35,14 +42,20 @@ contract EthSwap {
         token.transfer(msg.sender, tokenAmount);
 
         // Emit an event (tokens purchased)
-        emit TokenPurchased(msg.sender, address(token), tokenAmount, rate );
+        emit TokensPurchased(msg.sender, address(token), tokenAmount, rate );
      
    }
 
 function sellTokens(uint _amount) public {
-	// Calculate the amount of etther to redeem.
+	// User can't sell more tokens than they have
+	require(token.balanceOf(msg.sender) >= _amount);
 
+
+	// Calculate the amount of etther to redeem.
 	uint etherAmount = _amount / rate;
+
+	// Require t)hat EthSwap has enough Ether
+	require (address(this).balance >= etherAmount);
 	
 	// Perform sale 
 	//use of transferFrom function of erc-20 tokens. 
@@ -50,6 +63,9 @@ function sellTokens(uint _amount) public {
 
 	token.transferFrom(msg.sender, address(this), _amount);
 	msg.sender.transfer(etherAmount);
+
+	// Emit an event
+	emit TokensSold(msg.sender, address(token), _amount, rate);
 }
 
 }
