@@ -33,7 +33,7 @@ class App extends Component {
       this.setState({ token })
       let tokenBalance = await token.methods.balanceOf(this.state.account).call()
       console.log ("tokenBalance", tokenBalance )
-      this.setState({tokenBalance: tokenBalance})
+      this.setState({ tokenBalance: tokenBalance })
     }
 
     // Load EthSwap
@@ -105,7 +105,10 @@ constructor(props) {
       content = <p id = "loader" className="text-center"> Loading....</p>
 
     } else {
-      content = <Main/>
+      content = <Main
+        ethBalance={this.state.ethBalance} 
+        tokenBalance={this.state.tokenBalance}
+        />
 
     }
     return (
@@ -121,7 +124,13 @@ constructor(props) {
                   rel="noopener noreferrer"
                 >
                 </a>
+
+
+
                 {content}
+
+
+
               </div>
             </main>
           </div>
